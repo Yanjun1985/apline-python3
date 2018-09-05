@@ -21,9 +21,9 @@ ENV INSTALL_PATH /software/python
 
 RUN set -ex \
     && apk add --no-cache ca-certificates vim bash lftp vsftpd gnupg \  
-    && apk add --no-cache --virtual=.fetch-deps build-base linux-headers dpkg dpkg-dev \
+    && apk add --no-cache --virtual=.fetch-deps build-base \
        zlib-dev readline-dev bzip2-dev ncurses-dev sqlite-dev gdbm-dev xz-dev tk-dev \  
-    ##&& apk add --no-cache --virtual=.build-deps expat-dev libffi-dev libbz2  python3-dev \      
+    && apk add --no-cache --virtual=.build-deps linux-headers libffi-dev expat-dev  libbz2  python3-dev dpkg dpkg-dev \      
     && mkdir -p ${INSTALL_PATH} \
     && wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" \
     && tar -xJC ${INSTALL_PATH} --strip-components=1 -f python.tar.xz \
@@ -57,7 +57,7 @@ RUN cd /usr/local/bin \
 # if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
 ENV PYTHON_PIP_VERSION 10.0.1
 
-#RUN python -m pip install --upgrade pip \
+RUN python -m pip install --upgrade pip \
     && pip install Django==2.0.5 \
     && pip install Cython \
     && pip install jieba \
