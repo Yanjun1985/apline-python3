@@ -22,7 +22,7 @@ ENV INSTALL_PATH /software/python
 RUN set -ex \
     && apk add --no-cache ca-certificates vim bash lftp vsftpd gnupg \  
     && apk add --no-cache --virtual=.fetch-deps build-base dpkg dpkg-dev zlib-dev readline-dev bzip2-dev ncurses-dev sqlite-dev gdbm-dev xz-dev tk-dev \  
-    && apk add --no-cache --virtual=.build-deps linux-headers expat-dev libffi-dev libbz2  python3-dev \      
+##    && apk add --no-cache --virtual=.build-deps linux-headers expat-dev libffi-dev libbz2  python3-dev \      
     && mkdir -p ${INSTALL_PATH} \
     && wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" \
     && tar -xJC ${INSTALL_PATH} --strip-components=1 -f python.tar.xz \
