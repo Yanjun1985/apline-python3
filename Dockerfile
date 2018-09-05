@@ -23,7 +23,8 @@ RUN set -ex \
     && apk add --no-cache ca-certificates vim bash lftp vsftpd gnupg \  
     && apk add --no-cache --virtual=.fetch-deps build-base \
        zlib-dev readline-dev bzip2-dev ncurses-dev sqlite-dev gdbm-dev xz-dev tk-dev \  
-    && apk add --no-cache --virtual=.build-deps linux-headers libffi-dev expat-dev  libbz2  python3-dev dpkg dpkg-dev \      
+       linux-headers libffi-dev expat-dev  libbz2  python3-dev dpkg dpkg-dev \ 
+    && apk add --no-cache --virtual=.build-deps openssl libssl-dev
     && mkdir -p ${INSTALL_PATH} \
     && wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" \
     && tar -xJC ${INSTALL_PATH} --strip-components=1 -f python.tar.xz \
@@ -35,6 +36,7 @@ RUN set -ex \
         --enable-shared \
         --with-system-expat \
         --with-system-ffi \
+        --with-ssl\
     && make -j "$(nproc)" EXTRA_CFLAGS="-DTHREAD_STACK_SIZE=0x100000" \
     && make install \
     \
