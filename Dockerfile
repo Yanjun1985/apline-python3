@@ -18,10 +18,10 @@ ENV PYTHON_VERSION 3.6.5
 ENV INSTALL_PATH /software/python
 
 RUN set -ex \
-    && apk add --no-cache ca-certificates vim bash lftp vsftpd gnupg net-tools procps\  
-    && apk add --no-cache --virtual=.fetch-deps dpkg  sqlite \
+    && apk add --no-cache ca-certificates vim bash lftp vsftpd gnupg net-tools procps \  
+    && apk add --no-cache --virtual=.fetch-deps dpkg sqlite \
     && apk add --no-cache --virtual=.build-deps build-base dpkg-dev libressl-dev python3-dev openblas-dev libffi-dev readline-dev \
-       ncurses-dev gdbm-dev  expat-dev linux-headers  zlib-dev  bzip2-dev tk-dev libbz2\
+       ncurses-dev gdbm-dev  expat-dev linux-headers zlib-dev bzip2-dev tk-dev libbz2 \
     && mkdir -p ${INSTALL_PATH} \
     && wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" \
     && tar -xJC ${INSTALL_PATH} --strip-components=1 -f python.tar.xz \
@@ -51,7 +51,7 @@ RUN cd /usr/local/bin \
     && ln -s pydoc3 pydoc \
     && ln -s python3 python \
     && ln -s pip3 pip \
-    && ln -s python3-config python-config 、
+    && ln -s python3-config python-config
 
 # if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
 ENV PYTHON_PIP_VERSION 10.0.1
