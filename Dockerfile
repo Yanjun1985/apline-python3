@@ -20,7 +20,7 @@ ENV INSTALL_PATH /software/python
 
 
 RUN set -ex \
-    && apk add --no-cache ca-certificates vim bash lftp vsftpd gnupg \  
+    && apk add --no-cache ca-certificates vim bash lftp vsftpd gnupg net-tools procps\  
     && apk add --no-cache --virtual=.fetch-deps build-base \
        zlib-dev readline-dev bzip2-dev ncurses-dev sqlite-dev gdbm-dev xz-dev tk-dev \  
        linux-headers libffi-dev expat-dev  libbz2  dpkg dpkg-dev \ 
@@ -68,14 +68,8 @@ RUN python -m pip install --upgrade pip \
     && pip install pyLDAvis \
     && pip install xlrd \
     && pip install pymysql \
-    && pip install datetime \
-    && pip install os \
-    && pip install sys \
-    && pip logging \
-    && pip json \
-    && pip libs \
     && pip pandas \
-    && pip gensiom
+    && apk del .build-deps .fetch-deps 
 
 EXPOSE 19000
 CMD ["python"]
