@@ -21,10 +21,9 @@ ENV INSTALL_PATH /software/python
 
 RUN set -ex \
     && apk add --no-cache ca-certificates vim bash lftp vsftpd gnupg net-tools procps\  
-    && apk add --no-cache --virtual=.fetch-deps build-base \
-       zlib-dev readline-dev bzip2-dev ncurses-dev sqlite-dev gdbm-dev xz-dev tk-dev \  
-       linux-headers libffi-dev expat-dev  libbz2  dpkg dpkg-dev \ 
-    && apk add --no-cache --virtual=.build-deps libressl-dev python3-dev \
+    && apk add --no-cache --virtual=.fetch-deps build-base dpkg dpkg-dev sqlite-dev readline-dev  xz-dev ncurses-dev gdbm-dev  libbz2\
+       zlib-dev  bzip2-dev tk-dev linux-headers  expat-dev \ 
+    && apk add --no-cache --virtual=.build-deps libressl-dev python3-dev openblas-dev libffi-dev \
     && mkdir -p ${INSTALL_PATH} \
     && wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" \
     && tar -xJC ${INSTALL_PATH} --strip-components=1 -f python.tar.xz \
@@ -68,7 +67,7 @@ RUN python -m pip install --upgrade pip \
     && pip install pyLDAvis \
     && pip install xlrd \
     && pip install pymysql \
-    && pip pandas \
+    && pip install pandas \
     && apk del .build-deps .fetch-deps 
 
 EXPOSE 19000
